@@ -58,7 +58,7 @@ function render_company_report_page() {
 
 	$status = sanitize_title( $_GET['status'] );
 
-	if ( ! in_array( $status, array( 'draft','5ftf-deactivated','publish' ) ) ) {
+	if ( ! in_array( $status, array( 'draft', '5ftf-deactivated', 'publish' ) ) ) {
 		$status = 'all';
 	}
 
@@ -126,7 +126,7 @@ function render_company_report_page() {
 		$wporg_profiles = wp_list_pluck( $users, 'post_title' );
 
 		$usernames = implode( ', ', $wporg_profiles );
-		$teams     = implode( ', ', str_replace( ' Team', '', $team[ 'teams' ] ) );
+		$teams     = implode( ', ', str_replace( ' Team', '', $team['teams'] ) );
 
 		echo '<tr>';
 		echo ' <td><a href="' . esc_url( $pledge->guid ) . '">' . esc_html( $pledge->post_title ) . '</a></td>';
@@ -152,7 +152,6 @@ function render_company_report_page() {
 
 /**
  * CSV export runner, grabs data lazily from a transient.
- * @param $data array.
  */
 function export_csv() {
 
