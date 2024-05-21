@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * List of contributors and useful stats around it.
  */
 
@@ -18,7 +18,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_admin_pages' );
 add_action( 'admin_enqueue_scripts',  __NAMESPACE__ . '\enqueue_assets' );
 add_action( 'admin_init', __NAMESPACE__ . '\export_csv' );
 
-/*
+/**
  * Register admin page.
  */
 function add_admin_pages() {
@@ -32,7 +32,7 @@ function add_admin_pages() {
 	);
 }
 
-/*
+/**
  * Enqueue assets/
  */
 function enqueue_assets() {
@@ -51,14 +51,14 @@ function enqueue_assets() {
 	}
 }
 
-/*
+/**
  * Render results and download button.
  */
 function render_company_report_page() {
 
 	$status = sanitize_title( $_GET['status'] );
 
-	if ( ! in_array( $status, [ 'draft', '5ftf-deactivated', 'publish' ] ) ) {
+	if ( ! in_array( $status, array( 'draft','5ftf-deactivated','publish' ) ) ) {
 		$status = 'all';
 	}
 
@@ -87,9 +87,9 @@ function render_company_report_page() {
 
 	<form action="#" method="post">
 		<input type="hidden" name="wporg-5ftf-cr" value="1">
-		<input type="hidden" name="status" value="<?php echo $status; ?>">
+		<input type="hidden" name="status" value="<?php echo esc_attr( $status ); ?>">
 		<input type="submit" value="Export">
-		<?php echo wp_nonce_field( '5ftf_download_company_report' ); ?>
+		<?php wp_nonce_field( '5ftf_download_company_report' ); ?>
 	</form>
 
 	<table id="wporg-5ftf-company-report">
@@ -140,10 +140,8 @@ function render_company_report_page() {
 		echo ' <td>' . esc_html( $email ). '</td>';
 		echo ' <td>' . esc_html( $date_created ) . '</td>';
 		echo ' <td>' . esc_html( $date_modified ) . '</td>';
-
 		echo '</tr>';
-		$export_data[] = [ $pledge->post_title, $pledge->post_status, $hours, $contributors, $usernames, $teams, $company_url, $pledge_url, $email, $date_created, $date_modified ];
-
+		$export_data[] = array( $pledge->post_title, $pledge->post_status, $hours, $contributors, $usernames, $teams, $company_url, $pledge_url, $email, $date_created, $date_modified );
 	}
 	echo '</table>';
 	echo '<p>Total contributors: ' . esc_html( $all_contributors ) . '</p>';
@@ -152,7 +150,7 @@ function render_company_report_page() {
 	set_transient( 'wporg_5ftf_company_report_' . $status, $export_data, 60 );
 }
 
-/*
+/**
  *  CSV export runner, grabs data lazily from a transient.
  *  @param $data array.
  */
@@ -172,7 +170,7 @@ function export_csv() {
 
 	$exporter = new Export_CSV( array(
 		'filename' => 'company-report-' . $status,
-		'headers'  => array( 'Company', 'Status', 'Hours', 'Contributors', 'Users', 'Teams', 'Company URL', 'Pledge URL', 'Email', 'Created', 'Last updated' ),
+		'headers'  => array( 'Company','Status','Hours','Contributors','Users','Teams','Company URL','Pledge URL','Email','Created','Last updated' ),
 		'data'     => $data,
 	) );
 
