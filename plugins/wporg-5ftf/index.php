@@ -33,6 +33,7 @@ function load() {
 	require_once get_includes_path() . 'pledge.php';
 	require_once get_includes_path() . 'pledge-form.php';
 	require_once get_includes_path() . 'pledge-meta.php';
+	require_once get_includes_path() . 'reports.php';
 	require_once get_includes_path() . 'stats.php';
 	require_once get_includes_path() . 'xprofile.php';
 
