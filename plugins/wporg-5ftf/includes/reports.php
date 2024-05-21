@@ -58,7 +58,7 @@ function render_company_report_page() {
 
 	$status = sanitize_title( $_GET['status'] );
 
-	if ( ! in_array( $status, array( 'draft', '5ftf-deactivated', 'publish' ) ) ) {
+	if ( ! in_array( $status, array( 'draft','5ftf-deactivated','publish' ) ) ) {
 		$status = 'all';
 	}
 
