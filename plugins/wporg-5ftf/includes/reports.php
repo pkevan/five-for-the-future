@@ -58,17 +58,17 @@ function render_company_report_page() {
 
 	$status = sanitize_title( $_GET['status'] );
 
-	if ( ! in_array( $status, array( 'draft','5ftf-deactivated','publish' ) ) ) {
+	if ( ! in_array( $status, array( 'draft', '5ftf-deactivated', 'publish' ) ) ) {
 		$status = 'all';
 	}
 
-	$pledges = get_posts( [
+	$pledges = get_posts( array(
 		'post_type' => '5ftf_pledge',
 		'post_status' => $status,
 		'posts_per_page' => 250, // set to 250 to avoid unexpected memory overuse.
 		'orderby' => 'post_title',
 		'order' => 'ASC',
-	] );
+	) );
 
 	// Add visible warning on page if we hit the upper limit of the query.
 	if ( 250 == count( $pledges ) ) {
@@ -109,7 +109,7 @@ function render_company_report_page() {
 <?php
 	$all_contributors = 0;
 
-	$export_data = [];
+	$export_data = array();
 	foreach ( $pledges as $pledge ) {
 		$company_url    = get_post_meta( $pledge->ID, '5ftf_org-domain', true );
 		$pledge_url     = get_post_meta( $pledge->ID, '5ftf_org-url', true );
@@ -151,8 +151,8 @@ function render_company_report_page() {
 }
 
 /**
- *  CSV export runner, grabs data lazily from a transient.
- *  @param $data array.
+ * CSV export runner, grabs data lazily from a transient.
+ * @param $data array.
  */
 function export_csv() {
 
@@ -170,7 +170,7 @@ function export_csv() {
 
 	$exporter = new Export_CSV( array(
 		'filename' => 'company-report-' . $status,
-		'headers'  => array( 'Company','Status','Hours','Contributors','Users','Teams','Company URL','Pledge URL','Email','Created','Last updated' ),
+		'headers'  => array( 'Company', 'Status', 'Hours', 'Contributors', 'Users', 'Teams', 'Company URL', 'Pledge URL', 'Email', 'Created', 'Last updated' ),
 		'data'     => $data,
 	) );
 
