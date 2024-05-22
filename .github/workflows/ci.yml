@@ -9,6 +9,7 @@ jobs:
   phpcs:
       name: PHPCS
       runs-on: ubuntu-latest
+
       steps:
         - uses: actions/checkout@v3
         - name: WPCS check
